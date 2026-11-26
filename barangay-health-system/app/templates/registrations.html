@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>Program registrations</h1>
+<div class="scroll"><table><tr><th>ID</th><th>Resident</th><th>Program</th><th>Registered at</th><th>Status</th></tr>
+{% for r in rows %}<tr><td>{{ r.registration_id }}</td><td>{{ r.resident }}</td><td>{{ r.program_name }}</td><td>{{ r.registered_at|fmt }}</td>
+<td><form class="inline" method="post" action="{{ url_for('registration_status', rid=r.registration_id) }}"><select name="status" onchange="this.form.submit()">{% for s in statuses %}<option {{ 'selected' if s == r.status }}>{{ s }}</option>{% endfor %}</select></form></td></tr>{% endfor %}</table></div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<div class="login card"><h1>Resident registration</h1>
+<form method="post" class="stack">
+  <label>Full name</label><input name="full_name" required value="{{ request.form.full_name }}">
+  <label>Birth date</label><input type="date" name="birth_date" required max="{{ today }}" value="{{ request.form.birth_date }}">
+  <label>Contact number (09XXXXXXXXX)</label><input name="contact_number" required maxlength="11" pattern="09[0-9]{9}" value="{{ request.form.contact_number }}">
+  <label>Address</label><input name="address" required value="{{ request.form.address }}">
+  <label>Username</label><input name="username" required value="{{ request.form.username }}">
+  <label>Password (at least 6 characters)</label><input type="password" name="password" required>
+  <p><button>Register</button> <a href="{{ url_for('login') }}">Back to login</a></p>
+</form></div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<h1>Constraint and business rule tests</h1>
+<p class="muted">Each test tries to break a rule. The database should block it. Nothing is ever saved (every test is rolled back).</p>
+<form method="post"><button name="test" value="all">Run all tests</button></form><br>
+{% for t in tests %}<div class="card"><b>{{ loop.index }}. {{ t[0] }}</b>
+<form method="post" class="inline"><button class="sm" name="test" value="{{ loop.index0 }}">Run</button></form>
+<pre>{{ t[1] }}</pre>
+{% if results.get(loop.index0) %}{% set r = results[loop.index0] %}<p class="{{ 'ok-t' if r[0] else 'bad-t' }}">{{ 'BLOCKED as expected' if r[0] else 'PROBLEM' }}</p><p>{{ r[1] }}</p>{% endif %}</div>{% endfor %}
+{% endblock %}

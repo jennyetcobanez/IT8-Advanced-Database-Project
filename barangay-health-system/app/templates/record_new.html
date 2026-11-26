@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<h1>New medical record</h1>
+<div class="card"><form method="post" class="stack">
+  <label>Resident</label><select name="resident_id" required><option value="">Choose...</option>{% for r in residents %}<option value="{{ r.resident_id }}">{{ r.full_name }} (#{{ r.resident_id }})</option>{% endfor %}</select>
+  <label>Visit date</label><input type="date" name="visit_date" required value="{{ today }}">
+  <label>Diagnosis</label><input name="diagnosis" required>
+  <label>Notes</label><textarea name="notes" rows="3"></textarea>
+  <p><button>Save record</button> <a href="{{ url_for('records') }}">Cancel</a></p>
+</form></div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<h1>{{ 'Edit resident' if r else 'Add resident' }}</h1>
+<div class="card"><form method="post" class="stack">
+  <label>Full name</label><input name="full_name" required value="{{ r.full_name if r else request.form.full_name }}">
+  <label>Birth date</label><input type="date" name="birth_date" required max="{{ today }}" value="{{ r.birth_date|fmt if r else request.form.birth_date }}">
+  <label>Contact number (09XXXXXXXXX)</label><input name="contact_number" required maxlength="11" value="{{ r.contact_number if r else request.form.contact_number }}">
+  <label>Address</label><input name="address" required value="{{ r.address if r else request.form.address }}">
+  {% if not r %}<label>Username</label><input name="username" required value="{{ request.form.username }}">{% endif %}
+  <label>{{ 'New password (leave blank to keep)' if r else 'Password (blank = password123)' }}</label><input type="password" name="password">
+  <p><button>Save</button> <a href="{{ url_for('residents') }}">Cancel</a></p>
+</form></div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<h1>Announcements</h1>
+{% if session.role == 'worker' %}
+<div class="card"><form method="post" action="{{ url_for('announcement_add') }}" class="stack"><b>Post announcement</b>
+<label>Title</label><input name="title" required><label>Content</label><textarea name="content" rows="3" required></textarea><p><button class="sm">Post</button></p></form></div>
+{% endif %}
+{% for a in rows %}<div class="card"><b>{{ a.title }}</b><br><span class="muted">{{ a.date_posted|fmt }} | {{ a.posted_by }}</span><p>{{ a.content }}</p>
+{% if session.role == 'worker' %}<a class="btn sm" href="{{ url_for('announcement_edit', aid=a.announcement_id) }}">Edit</a>
+<form class="inline" method="post" action="{{ url_for('announcement_delete', aid=a.announcement_id) }}" onsubmit="return confirm('Delete this announcement?')"><button class="sm red">Delete</button></form>{% endif %}</div>
+{% else %}<p class="muted">No announcements.</p>{% endfor %}
+{% endblock %}

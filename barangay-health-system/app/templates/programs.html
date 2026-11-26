@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>Health programs</h1>
+{% if session.role == 'worker' %}
+<div class="card"><form method="post" action="{{ url_for('program_add') }}" class="stack"><b>Create program</b>
+<label>Name</label><input name="program_name" required><label>Description</label><input name="description"><label>Schedule</label><input type="datetime-local" name="schedule" required>
+<p><button class="sm">Create</button></p></form></div>
+{% endif %}
+<div class="scroll"><table><tr><th>Program</th><th>Schedule</th><th>Status</th><th>Handled by</th>{% if session.role == 'resident' %}<th>My registration</th>{% endif %}<th>Actions</th></tr>
+{% for p in rows %}<tr><td><b>{{ p.program_name }}</b><br><span class="muted">{{ p.description }}</span></td><td>{{ p.schedule|fmt }}</td><td>{{ m.badge(p.status) }}</td><td>{{ p.worker }}</td>
+{% if session.role == 'resident' %}<td>{% if p.reg_status %}{{ m.badge(p.reg_status) }}{% else %}<span class="muted">Not registered</span>{% endif %}</td>{% endif %}
+<td>{% if session.role == 'resident' %}
+  {% if p.reg_status == 'Registered' %}<form class="inline" method="post" action="{{ url_for('program_unregister', pid=p.program_id) }}"><button class="sm gray">Cancel registration</button></form>
+  {% elif p.status == 'Upcoming' %}<form class="inline" method="post" action="{{ url_for('program_register', pid=p.program_id) }}"><button class="sm">{{ 'Register again' if p.reg_status == 'Cancelled' else 'Register' }}</button></form>{% endif %}
+{% else %}
+  <form class="inline" method="post" action="{{ url_for('program_status', pid=p.program_id) }}"><select name="status" onchange="this.form.submit()">{% for s in statuses %}<option {{ 'selected' if s == p.status }}>{{ s }}</option>{% endfor %}</select></form>
+  <form class="inline" method="post" action="{{ url_for('program_delete', pid=p.program_id) }}" onsubmit="return confirm('Delete this program and its registrations?')"><button class="sm red">Delete</button></form>
+{% endif %}</td></tr>{% endfor %}</table></div>
+{% endblock %}

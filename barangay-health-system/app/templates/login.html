@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<div class="login card"><h1>Log in</h1>
+<form method="post" class="stack">
+  <label>I am a</label><select name="role"><option value="resident">Resident</option><option value="worker">Health worker / administrator</option></select>
+  <label>Username</label><input name="username" required autofocus>
+  <label>Password</label><input type="password" name="password" required>
+  <p><button>Log in</button></p>
+</form>
+<p class="muted">New resident? <a href="{{ url_for('register') }}">Create an account</a></p>
+<p class="muted">Demo: resident01 or worker01, password: password123</p></div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>{{ 'Medical records' if session.role == 'worker' else 'My medical records' }}</h1>
+{% if session.role == 'worker' %}<p><a class="btn" href="{{ url_for('record_new') }}">+ New medical record</a></p>{% endif %}
+{{ m.table(rows) }}
+{% endblock %}

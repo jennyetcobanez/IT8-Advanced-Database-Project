@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<h1>Residents</h1><p><a class="btn" href="{{ url_for('resident_new') }}">+ Add resident</a></p>
+<div class="scroll"><table><tr><th>ID</th><th>Name</th><th>Birth date</th><th>Contact</th><th>Address</th><th>Actions</th></tr>
+{% for r in rows %}<tr><td>{{ r.resident_id }}</td><td>{{ r.full_name }}</td><td>{{ r.birth_date|fmt }}</td><td>{{ r.contact_number }}</td><td>{{ r.address }}</td>
+<td><a class="btn sm" href="{{ url_for('resident_edit', rid=r.resident_id) }}">Edit</a>
+<form class="inline" method="post" action="{{ url_for('resident_delete', rid=r.resident_id) }}" onsubmit="return confirm('Delete this resident?')"><button class="sm red">Delete</button></form></td></tr>{% endfor %}</table></div>
+{% endblock %}

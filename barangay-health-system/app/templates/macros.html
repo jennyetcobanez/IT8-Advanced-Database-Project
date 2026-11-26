@@ -1,0 +1,6 @@
+{% macro badge(s) %}<span class="badge b-{{ s|string|lower|replace(' ','-') }}">{{ s }}</span>{% endmacro %}
+{% macro table(rows) %}
+{% if rows %}<div class="scroll"><table><thead><tr>{% for k in rows[0].keys() %}<th>{{ k|replace('_',' ')|title }}</th>{% endfor %}</tr></thead>
+<tbody>{% for r in rows %}<tr>{% for v in r.values() %}<td>{{ v|fmt }}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>
+{% else %}<p class="muted">No rows.</p>{% endif %}
+{% endmacro %}

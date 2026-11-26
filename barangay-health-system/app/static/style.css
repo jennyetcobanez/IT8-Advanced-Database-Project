@@ -1,0 +1,31 @@
+:root{--g:#0f6e56;--gl:#e1f5ee;--b:#d3d1c7;--t:#2c2c2a;--m:#6b6a65}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--t);background:#f7f6f2;line-height:1.5}
+nav{background:var(--g);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:8px 16px}
+nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;font-size:14px}
+nav a:hover{background:rgba(255,255,255,.18)}
+nav .brand{font-weight:bold;margin-right:12px}nav .sp{flex:1}nav .who{font-size:13px;opacity:.9;margin-right:6px}
+main{max-width:1100px;margin:20px auto;padding:0 16px}
+h1{font-size:24px;margin:0 0 14px}h2{font-size:18px;margin:22px 0 8px}
+.card{background:#fff;border:1px solid var(--b);border-radius:10px;padding:16px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.stat{background:#fff;border:1px solid var(--b);border-radius:10px;padding:14px}.stat b{font-size:28px;display:block;color:var(--g)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--b);font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid #ecebe5;text-align:left;vertical-align:top}
+th{background:#f1efe8;font-weight:bold}
+form.stack label{display:block;margin:10px 0 4px;font-size:14px;font-weight:bold}
+input,select,textarea{width:100%;padding:8px;border:1px solid #b4b2a9;border-radius:6px;font:inherit;background:#fff}
+td input,td select,form.inline input,form.inline select{width:auto}
+.btn,button{background:var(--g);color:#fff;border:0;border-radius:6px;padding:7px 14px;font:inherit;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+button.sm{padding:3px 9px;font-size:12px}button.red{background:#a32d2d}button.gray{background:#5f5e5a}
+form.inline{display:inline}
+.flash{padding:10px 14px;border-radius:8px;margin-bottom:10px;font-size:14px}
+.flash.ok{background:var(--gl);border:1px solid #5dcaa5}.flash.error{background:#fcebeb;border:1px solid #f09595}
+.muted{color:var(--m);font-size:14px}
+.badge{padding:2px 8px;border-radius:10px;font-size:12px;background:#f1efe8}
+.b-pending,.b-upcoming,.b-low-stock{background:#faeeda}.b-approved,.b-available,.b-registered,.b-ongoing{background:#e1f5ee}
+.b-completed,.b-attended{background:#e6f1fb}.b-cancelled,.b-rejected,.b-out-of-stock{background:#fcebeb}
+pre{background:#f1efe8;padding:10px;border-radius:6px;overflow-x:auto;font-size:12px}
+.login{max-width:380px;margin:50px auto}
+.ok-t{color:#0f6e56;font-weight:bold}.bad-t{color:#a32d2d;font-weight:bold}

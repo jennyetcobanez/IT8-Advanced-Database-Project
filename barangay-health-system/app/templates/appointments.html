@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>Appointments</h1>
+{% if session.role == 'resident' %}<p><a class="btn" href="{{ url_for('appt_new') }}">+ Request appointment</a></p>
+{% else %}<form method="get" class="inline">Filter by status:
+<select name="status" onchange="this.form.submit()"><option value="">All</option>{% for s in APPT_STATUSES %}<option {{ 'selected' if s == status }}>{{ s }}</option>{% endfor %}</select></form><br><br>{% endif %}
+<div class="scroll"><table><tr><th>ID</th><th>Date</th><th>Time</th>{% if session.role == 'worker' %}<th>Resident</th>{% endif %}<th>Health worker</th><th>Reason</th><th>Status</th><th>Actions</th></tr>
+{% for a in rows %}<tr><td>{{ a.appointment_id }}</td><td>{{ a.appointment_date|fmt }}</td><td>{{ a.start_time|fmt }}-{{ a.end_time|fmt }}</td>
+{% if session.role == 'worker' %}<td>{{ a.resident_name }}</td>{% endif %}<td>{{ a.worker_name }}</td><td>{{ a.reason }}</td><td>{{ m.badge(a.status) }}</td><td>
+{% if session.role == 'resident' %}
+  {% if a.status in ('Pending','Approved') %}<form class="inline" method="post" action="{{ url_for('appt_cancel', aid=a.appointment_id) }}" onsubmit="return confirm('Cancel this appointment?')"><button class="sm red">Cancel</button></form>{% endif %}
+{% else %}
+  {% if a.status == 'Pending' %}
+    <form class="inline" method="post" action="{{ url_for('appt_status', aid=a.appointment_id) }}"><input type="hidden" name="status" value="Approved"><button class="sm">Approve</button></form>
+    <form class="inline" method="post" action="{{ url_for('appt_status', aid=a.appointment_id) }}"><input type="hidden" name="status" value="Rejected"><button class="sm gray">Reject</button></form>
+  {% elif a.status == 'Approved' %}
+    <form class="inline" method="post" action="{{ url_for('appt_status', aid=a.appointment_id) }}"><input type="hidden" name="status" value="Completed"><button class="sm">Complete</button></form>
+  {% endif %}
+  <form class="inline" method="post" action="{{ url_for('appt_delete', aid=a.appointment_id) }}" onsubmit="return confirm('Delete this appointment?')"><button class="sm red">Delete</button></form>
+{% endif %}</td></tr>
+{% else %}<tr><td colspan="8" class="muted">No appointments.</td></tr>{% endfor %}</table></div>
+{% endblock %}

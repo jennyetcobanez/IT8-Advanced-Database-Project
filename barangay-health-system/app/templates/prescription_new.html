@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h1>New prescription</h1>
+<div class="card"><form method="post" class="stack">
+  <label>Medical record</label><select name="record_id" required><option value="">Choose...</option>
+  {% for r in recs %}<option value="{{ r.record_id }}">#{{ r.record_id }} | {{ r.full_name }} | {{ r.visit_date|fmt }} | {{ r.diagnosis }}</option>{% endfor %}</select>
+  <label>Medicine</label><select name="medicine_id" required><option value="">Choose...</option>
+  {% for m in meds %}<option value="{{ m.medicine_id }}">{{ m.medicine_name }} (stock: {{ m.quantity }})</option>{% endfor %}</select>
+  <label>Quantity</label><input type="number" name="quantity" required>
+  <label>Instructions</label><input name="instructions" required>
+  <p class="muted">Saving creates the prescription and reduces the stock in one transaction.</p>
+  <p><button>Save prescription</button> <a href="{{ url_for('prescriptions') }}">Cancel</a></p>
+</form></div>
+{% endblock %}

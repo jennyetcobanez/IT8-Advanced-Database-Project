@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block content %}
+<h1>Edit announcement</h1>
+<div class="card"><form method="post" class="stack">
+<label>Title</label><input name="title" required value="{{ a.title }}"><label>Content</label><textarea name="content" rows="4" required>{{ a.content }}</textarea>
+<p><button>Save</button> <a href="{{ url_for('announcements') }}">Cancel</a></p></form></div>
+{% endblock %}

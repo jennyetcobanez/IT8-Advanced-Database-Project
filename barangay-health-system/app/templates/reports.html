@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>Required queries</h1><p class="muted">These run live on the database. Use them for the video: join, GROUP BY/HAVING, subquery, and view.</p>
+{% for title, sql, rows, err in reports %}<h2>{{ title }}</h2><pre>{{ sql }}</pre>
+{% if err %}<div class="flash error">{{ err }}</div>{% else %}{{ m.table(rows) }}{% endif %}{% endfor %}
+{% endblock %}

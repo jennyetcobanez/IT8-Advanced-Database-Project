@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>Medicines</h1>
+{% if session.role == 'worker' %}
+<div class="card"><form method="post" action="{{ url_for('medicine_add') }}" class="inline">
+<b>Add medicine:</b> <input name="medicine_name" placeholder="Name" required> <input name="category" placeholder="Category" required> <input type="number" name="quantity" placeholder="Qty" value="0" min="0" style="width:80px"> <button class="sm">Add</button></form></div>
+{% endif %}
+<div class="scroll"><table><tr><th>ID</th><th>Medicine</th><th>Category</th><th>Quantity</th><th>Availability</th>{% if session.role == 'worker' %}<th>Actions</th>{% endif %}</tr>
+{% for r in rows %}<tr><td>{{ r.medicine_id }}</td><td>{{ r.medicine_name }}</td><td>{{ r.category }}</td><td>{{ r.quantity }}</td><td>{{ m.badge(r.availability_status) }}</td>
+{% if session.role == 'worker' %}<td>
+<form class="inline" method="post" action="{{ url_for('medicine_update', mid=r.medicine_id) }}"><input type="number" name="quantity" value="{{ r.quantity }}" style="width:80px"> <button class="sm">Update stock</button></form>
+<form class="inline" method="post" action="{{ url_for('medicine_delete', mid=r.medicine_id) }}" onsubmit="return confirm('Delete this medicine?')"><button class="sm red">Delete</button></form></td>{% endif %}</tr>{% endfor %}</table></div>
+{% endblock %}

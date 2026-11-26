@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block content %}
+<h1>Request an appointment</h1>
+<div class="card"><form method="post" class="stack">
+  <label>Health worker</label>
+  <select name="worker_id" required><option value="">Choose...</option>
+  {% for w in workers %}<option value="{{ w.worker_id }}" {{ 'selected' if v.get('worker_id') == w.worker_id|string }}>{{ w.full_name }} ({{ w.position }})</option>{% endfor %}</select>
+  <label>Date</label><input type="date" name="date" min="{{ today }}" required value="{{ v.get('date', '') }}">
+  <p><button type="submit" formmethod="get" formaction="{{ url_for('appt_new') }}" class="gray">Check available times</button></p>
+  {% if v.get('worker_id') and v.get('date') %}<p class="muted">Times already booked for this worker on this date are disabled.</p>{% endif %}
+  <label>Start time (30 minutes)</label>
+  <select name="start" required><option value="">Choose...</option>
+  {% for s in slots %}<option value="{{ s }}" {{ 'disabled' if s in taken }} {{ 'selected' if v.get('start') == s }}>{{ s }}{{ ' (taken)' if s in taken }}</option>{% endfor %}</select>
+  <label>Reason</label><textarea name="reason" rows="3" required>{{ v.get('reason', '') }}</textarea>
+  <p><button name="book" value="1">Submit request</button> <a href="{{ url_for('appointments') }}">Back</a></p>
+</form></div>
+{% endblock %}

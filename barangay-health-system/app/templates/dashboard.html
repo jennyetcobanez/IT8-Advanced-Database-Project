@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% import "macros.html" as m %}{% block content %}
+<h1>Welcome, {{ session.name }}</h1>
+{% if stats %}
+<div class="grid">
+  <div class="stat"><b>{{ stats.residents }}</b>Residents</div>
+  <div class="stat"><b>{{ stats.pending }}</b>Pending appointments</div>
+  <div class="stat"><b>{{ stats.lowstock }}</b>Medicines low or out of stock</div>
+  <div class="stat"><b>{{ stats.programs }}</b>Upcoming programs</div>
+</div>
+{% else %}
+<h2>Your upcoming appointments</h2>
+{% if upcoming %}<table><tr><th>Date</th><th>Time</th><th>Health worker</th><th>Reason</th><th>Status</th></tr>
+{% for a in upcoming %}<tr><td>{{ a.appointment_date|fmt }}</td><td>{{ a.start_time|fmt }}</td><td>{{ a.worker_name }}</td><td>{{ a.reason }}</td><td>{{ m.badge(a.status) }}</td></tr>{% endfor %}</table>
+{% else %}<p class="muted">No upcoming appointments.</p>{% endif %}
+<p><a class="btn" href="{{ url_for('appt_new') }}">Request an appointment</a></p>
+{% endif %}
+<h2>Latest announcements</h2>
+{% for n in news %}<div class="card"><b>{{ n.title }}</b><br><span class="muted">{{ n.date_posted|fmt }}</span></div>{% else %}<p class="muted">None yet.</p>{% endfor %}
+{% endblock %}
